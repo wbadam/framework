@@ -40,6 +40,7 @@ public class ComboBoxElement
     @Override
     public void openPopup() {
         if (isFirefox()) {
+            super.openPopup();
             getTestBenchCommandExecutor().executeScript("arguments[0].click();",
                     findElement(By.vaadin("#button")));
         } else {
