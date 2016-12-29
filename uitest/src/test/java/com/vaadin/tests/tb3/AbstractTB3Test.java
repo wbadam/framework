@@ -1006,12 +1006,17 @@ public abstract class AbstractTB3Test extends ParallelTest {
         WebElement cb = checkbox.findElement(By.xpath("input"));
         if (BrowserUtil.isChrome(getDesiredCapabilities())) {
             testBenchElement(cb).click(0, 0);
-        } else if (BrowserUtil.isFirefox(getDesiredCapabilities())) {
-            getTestBenchCommandExecutor().executeScript("arguments[0].click();",
-                    cb);
-        } else {
-            cb.click();
-        }
+        } else
+            try {
+                cb.click();
+            } catch (RuntimeException e) {
+                if (BrowserUtil.isFirefox(getDesiredCapabilities())) {
+                    getTestBenchCommandExecutor().executeScript("arguments[0].click();",
+                            cb);
+                } else {
+                    throw e;
+                }
+            }
     }
 
     protected boolean isLoadingIndicatorVisible() {

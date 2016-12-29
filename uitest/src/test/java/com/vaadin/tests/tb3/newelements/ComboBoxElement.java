@@ -39,12 +39,16 @@ public class ComboBoxElement
 
     @Override
     public void openPopup() {
-        if (isFirefox()) {
+        try {
             super.openPopup();
-            getTestBenchCommandExecutor().executeScript("arguments[0].click();",
-                    findElement(By.vaadin("#button")));
-        } else {
-            super.openPopup();
+        } catch (RuntimeException e) {
+//            Firefox workaround
+            if (isFirefox()) {
+                getTestBenchCommandExecutor().executeScript("arguments[0].click();",
+                        findElement(By.vaadin("#button")));
+            } else {
+                throw e;
+            }
         }
     }
 
@@ -54,7 +58,7 @@ public class ComboBoxElement
      *
      * @param delay
      *            delay after sending each individual key (mainly needed for
-     *            PhantomJS)
+     *                   PhantomJS)
      * @param keysToSend
      *            keys to type into the element
      */
