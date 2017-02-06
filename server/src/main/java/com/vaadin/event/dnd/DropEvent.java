@@ -25,14 +25,29 @@ import com.vaadin.ui.Component;
 /**
  * Server side drop event. Fired when an HTML5 drop happens.
  *
+ * @param <T>
+ *         Type of the drop target component.
  * @see DropTargetExtension#addDropListener(DropListener)
  */
-public class DropEvent extends Component.Event {
+public class DropEvent<T extends Component> extends Component.Event {
     private final Map<String, String> data;
     private final DropEffect dropEffect;
 
-    public DropEvent(Component source, List<String> types,
-            Map<String, String> data, DropEffect dropEffect) {
+    /**
+     * Creates a server side drop event.
+     *
+     * @param source
+     *         Component that is dragged.
+     * @param types
+     *         List of data types from {@code DataTransfer.types} object.
+     * @param data
+     *         Map containing all types and corresponding data from the {@code
+     *         DataTransfer} object.
+     * @param dropEffect
+     *         Drop effect from {@code DataTransfer.dropEffect} object.
+     */
+    public DropEvent(T source, List<String> types, Map<String, String> data,
+            DropEffect dropEffect) {
         super(source);
 
         // Create a linked map that preserves the order of types
@@ -61,5 +76,11 @@ public class DropEvent extends Component.Event {
      */
     public DropEffect getDropEffect() {
         return dropEffect;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public T getComponent() {
+        return (T) super.getComponent();
     }
 }

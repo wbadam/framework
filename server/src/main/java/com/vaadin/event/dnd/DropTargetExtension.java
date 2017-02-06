@@ -23,28 +23,32 @@ import com.vaadin.shared.Registration;
 import com.vaadin.shared.ui.dnd.DropEffect;
 import com.vaadin.shared.ui.dnd.DropTargetRpc;
 import com.vaadin.shared.ui.dnd.DropTargetState;
-import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Component;
 
 /**
  * Extension to add drop target functionality to a widget for using HTML5 drag
  * and drop.
+ *
+ * @param <T>
+ *         Type of the component to be extended.
  */
-public class DropTargetExtension extends AbstractExtension {
+public class DropTargetExtension<T extends AbstractClientConnector & Component> extends
+        AbstractExtension {
 
     /**
-     * Constructor for {@link DropTargetExtension}.
+     * Extends {@code target} component and makes it a drop target.
+     *
+     * @param target
+     *         Component to be extended.
      */
-    public DropTargetExtension() {
+    public DropTargetExtension(T target) {
         registerRpc((DropTargetRpc) (types, data, dropEffect) -> {
-            DropEvent event = new DropEvent((AbstractComponent) getParent(),
-                    types, data, dropEffect);
+            DropEvent<T> event = new DropEvent<>(target, types, data,
+                    dropEffect);
 
             fireEvent(event);
         });
-    }
 
-    @Override
-    public void extend(AbstractClientConnector target) {
         super.extend(target);
     }
 
@@ -134,5 +138,11 @@ public class DropTargetExtension extends AbstractExtension {
     @Override
     protected DropTargetState getState(boolean markAsDirty) {
         return (DropTargetState) super.getState(markAsDirty);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public T getParent() {
+        return (T) super.getParent();
     }
 }

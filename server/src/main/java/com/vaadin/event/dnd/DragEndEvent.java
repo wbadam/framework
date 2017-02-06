@@ -23,15 +23,30 @@ import com.vaadin.shared.ui.dnd.EffectAllowed;
 import com.vaadin.ui.Component;
 
 /**
- * Server side dragend event. Fired when an HTML5 dragend happens.
+ * Server side dragend event. Fired when an HTML5 dragend happens on the client.
  *
+ * @param <T>
+ *         Type of the component that was dragged.
  * @see DragSourceExtension#addDragEndListener(DragEndListener)
  */
-public class DragEndEvent extends Component.Event {
+public class DragEndEvent<T extends Component> extends Component.Event {
     private final Map<String, String> data;
     private final EffectAllowed effectAllowed;
 
-    public DragEndEvent(Component source, List<String> types,
+    /**
+     * Creates a server side dragend event.
+     *
+     * @param source
+     *         Component that is dragged.
+     * @param types
+     *         List of data types from {@code DataTransfer.types} object.
+     * @param data
+     *         Map containing all types and corresponding data from the {@code
+     *         DataTransfer} object.
+     * @param effectAllowed
+     *         Allowed effects from {@code DataTransfer.effectAllowed} object.
+     */
+    public DragEndEvent(T source, List<String> types,
             Map<String, String> data, EffectAllowed effectAllowed) {
         super(source);
 
@@ -56,5 +71,11 @@ public class DragEndEvent extends Component.Event {
 
     public EffectAllowed getEffectAllowed() {
         return effectAllowed;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public T getComponent() {
+        return (T) super.getComponent();
     }
 }

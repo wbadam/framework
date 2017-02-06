@@ -26,39 +26,43 @@ import com.vaadin.shared.Registration;
 import com.vaadin.shared.ui.dnd.DragSourceRpc;
 import com.vaadin.shared.ui.dnd.DragSourceState;
 import com.vaadin.shared.ui.dnd.EffectAllowed;
-import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Component;
 
 /**
- * Extension to add drag source functionality to a component for using HTML5
- * drag and drop.
+ * Extension to make a component drag source for HTML5 drag and drop
+ * functionality.
+ *
+ * @param <T>
+ *         Type of the component to be extended.
  */
-public class DragSourceExtension extends AbstractExtension {
+public class DragSourceExtension<T extends AbstractClientConnector & Component> extends
+        AbstractExtension {
 
     /**
-     * Constructor for {@link DragSourceExtension}
+     * Extends {@code target} component and makes it a drag source.
+     *
+     * @param target
+     *         Component to be extended.
      */
-    public DragSourceExtension() {
+    public DragSourceExtension(T target) {
         registerRpc(new DragSourceRpc() {
             @Override
             public void dragStart() {
-                DragStartEvent event = new DragStartEvent(
-                        (AbstractComponent) getParent(), getState().types,
-                        getState().data, getState().effectAllowed);
+                DragStartEvent<T> event = new DragStartEvent<>(target,
+                        getState().types, getState().data,
+                        getState().effectAllowed);
                 fireEvent(event);
             }
 
             @Override
             public void dragEnd() {
-                DragEndEvent event = new DragEndEvent(
-                        (AbstractComponent) getParent(), getState().types,
-                        getState().data, getState().effectAllowed);
+                DragEndEvent<T> event = new DragEndEvent<>(target,
+                        getState().types, getState().data,
+                        getState().effectAllowed);
                 fireEvent(event);
             }
         });
-    }
 
-    @Override
-    public void extend(AbstractClientConnector target) {
         super.extend(target);
     }
 
@@ -186,7 +190,7 @@ public class DragSourceExtension extends AbstractExtension {
      *         Listener to handle dragstart event.
      * @return Handle to be used to remove this listener.
      */
-    public Registration addDragStartListener(DragStartListener listener) {
+    public Registration addDragStartListener(DragStartListener<T> listener) {
         return addListener(DragSourceState.EVENT_DRAGSTART,
                 DragStartEvent.class, listener,
                 DragStartListener.DRAGSTART_METHOD);
@@ -201,7 +205,7 @@ public class DragSourceExtension extends AbstractExtension {
      *         Listener to handle dragend event.
      * @return Handle to be used to remove this listener.
      */
-    public Registration addDragEndListener(DragEndListener listener) {
+    public Registration addDragEndListener(DragEndListener<T> listener) {
         return addListener(DragSourceState.EVENT_DRAGEND, DragEndEvent.class,
                 listener, DragEndListener.DRAGEND_METHOD);
     }
@@ -214,5 +218,11 @@ public class DragSourceExtension extends AbstractExtension {
     @Override
     protected DragSourceState getState(boolean markAsDirty) {
         return (DragSourceState) super.getState(markAsDirty);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public T getParent() {
+        return (T) super.getParent();
     }
 }
