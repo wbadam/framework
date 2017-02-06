@@ -25,25 +25,28 @@ import com.vaadin.ui.Component;
 /**
  * Server side dragstart event. Fired when an HTML5 dragstart happens.
  *
+ * @param <T>
+ *         Type of the component that is being dragged.
  * @see DragSourceExtension#addDragStartListener(DragStartListener)
  */
-public class DragStartEvent extends Component.Event {
+public class DragStartEvent<T extends Component> extends Component.Event {
     private final Map<String, String> data;
     private final EffectAllowed effectAllowed;
 
     /**
-     * Creates a new server side dragend event.
+     * Creates a new server side dragstart event.
      *
      * @param source
-     *         Draggable component.
+     *         Component that is being dragged.
      * @param types
-     *         List of data types from {@code DataTransfer.types}.
+     *         List of data types from the {@code DataTransfer.types} object.
      * @param data
-     *         Map of all data from {@code DataTransfer}.
+     *         Map containing all types and corresponding data from the {@code
+     *         DataTransfer} object.
      * @param effectAllowed
-     *         Parameter from {@code DataTransfer.effectAllowed}.
+     *         Allowed effects from {@code DataTransfer.effectAllowed} object.
      */
-    public DragStartEvent(Component source, List<String> types,
+    public DragStartEvent(T source, List<String> types,
             Map<String, String> data, EffectAllowed effectAllowed) {
         super(source);
 
@@ -73,5 +76,11 @@ public class DragStartEvent extends Component.Event {
      */
     public EffectAllowed getEffectAllowed() {
         return effectAllowed;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public T getComponent() {
+        return (T) super.getComponent();
     }
 }

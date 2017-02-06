@@ -23,7 +23,6 @@ import com.vaadin.server.Extension;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.tests.components.AbstractTestUIWithLog;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
@@ -71,8 +70,8 @@ public class DragAndDropCardShuffle extends AbstractTestUIWithLog {
 
     private void addDragSourceExtension(Label source) {
         // Create and attach extension
-        DragSourceExtension dragSource = new DragSourceExtension();
-        dragSource.extend(source);
+        DragSourceExtension<Label> dragSource = new DragSourceExtension<>(
+                source);
 
         // Set component position as transfer data
         dragSource.setTransferData(DATA_INDEX,
@@ -81,19 +80,19 @@ public class DragAndDropCardShuffle extends AbstractTestUIWithLog {
         // Add listeners
         dragSource.addDragStartListener(event -> {
             event.getComponent().addStyleName("dragged");
-            log(((Label) event.getComponent()).getValue() + " dragstart");
+            log(event.getComponent().getValue() + " dragstart");
         });
 
         dragSource.addDragEndListener(event -> {
             event.getComponent().removeStyleName("dragged");
-            log(((Label) event.getComponent()).getValue() + " dragend");
+            log(event.getComponent().getValue() + " dragend");
         });
     }
 
     private void addDropTargetExtension(Label target) {
         // Create and attach extension
-        DropTargetExtension dropTarget = new DropTargetExtension();
-        dropTarget.extend(target);
+        DropTargetExtension<Label> dropTarget = new DropTargetExtension<>(
+                target);
 
         // Add listener
         dropTarget.addDropListener(event -> {
@@ -102,7 +101,7 @@ public class DragAndDropCardShuffle extends AbstractTestUIWithLog {
                     .valueOf(event.getTransferData(DATA_INDEX));
 
             // Find source component
-            Component source = desk.getComponent(sourceIndex);
+            Label source = (Label) desk.getComponent(sourceIndex);
 
             // Swap source and target components
             desk.replaceComponent(target, source);
@@ -123,8 +122,8 @@ public class DragAndDropCardShuffle extends AbstractTestUIWithLog {
                         String.valueOf(desk.getComponentIndex(source)));
             });
 
-            log(((Label) source).getValue() + " dropped onto " + ((Label) event
-                    .getComponent()).getValue());
+            log(source.getValue() + " dropped onto " + event.getComponent()
+                    .getValue());
         });
     }
 

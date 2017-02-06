@@ -18,15 +18,19 @@ package com.vaadin.event.dnd;
 import java.lang.reflect.Method;
 
 import com.vaadin.event.ConnectorEventListener;
+import com.vaadin.ui.Component;
 
 /**
  * Interface to be implemented when creating a dragend listener on a drag
  * source for HTML5 drag and drop.
  *
+ * @param <T>
+ *         Type of the draggable component.
  * @see DragSourceExtension#addDragEndListener(DragEndListener)
  */
 @FunctionalInterface
-public interface DragEndListener extends ConnectorEventListener {
+public interface DragEndListener<T extends Component> extends
+        ConnectorEventListener {
     static final Method DRAGEND_METHOD = DragEndListener.class
             .getDeclaredMethods()[0];
 
@@ -36,5 +40,5 @@ public interface DragEndListener extends ConnectorEventListener {
      * @param event
      *         The dragend event that is fired.
      */
-    void dragEnd(DragEndEvent event);
+    void dragEnd(DragEndEvent<T> event);
 }
