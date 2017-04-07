@@ -13,30 +13,28 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.shared.ui.dnd;
-
-import com.vaadin.shared.communication.ServerRpc;
+package com.vaadin.shared.ui.grid;
 
 /**
- * RPC for firing server side event when client side dragstart event happens on
- * drag source.
+ * Defines drop locations within a Grid row.
  *
- * @author Vaadin Ltd
- * @since 8.1
+ * @author Vaadin Ltd.
+ * @since
  */
-public interface DragSourceRpc extends ServerRpc {
+public enum DropLocation {
 
     /**
-     * Called when dragstart event happens on client side.
+     * Drop on top of the row.
      */
-    public void dragStart();
+    ON_TOP,
 
     /**
-     * Called when dragend event happens on client side.
-     *
-     * @param dropEffect
-     *         Drop effect of the dragend event, extracted from {@code
-     *         DataTransfer.dropEffect} parameter.
+     * Drop above or before the row.
      */
-    public void dragEnd(DropEffect dropEffect);
+    ABOVE,
+
+    /**
+     * Drop below or after the row.
+     */
+    BELOW
 }

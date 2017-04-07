@@ -13,30 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.shared.ui.dnd;
+package com.vaadin.shared.ui.grid;
 
-import com.vaadin.shared.communication.ServerRpc;
+import com.vaadin.shared.ui.dnd.DragSourceState;
 
 /**
- * RPC for firing server side event when client side dragstart event happens on
- * drag source.
+ * State class containing parameters for GridDragSource.
  *
  * @author Vaadin Ltd
- * @since 8.1
+ * @since
  */
-public interface DragSourceRpc extends ServerRpc {
+public class GridDragSourceState extends DragSourceState {
 
     /**
-     * Called when dragstart event happens on client side.
+     * Json key for storing data for a dragged row.
      */
-    public void dragStart();
+    public static final String JSONKEY_DRAG_DATA = "drag-data";
 
-    /**
-     * Called when dragend event happens on client side.
-     *
-     * @param dropEffect
-     *         Drop effect of the dragend event, extracted from {@code
-     *         DataTransfer.dropEffect} parameter.
-     */
-    public void dragEnd(DropEffect dropEffect);
 }

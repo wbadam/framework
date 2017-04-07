@@ -13,30 +13,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.vaadin.shared.ui.dnd;
+package com.vaadin.shared.ui.grid;
 
-import com.vaadin.shared.communication.ServerRpc;
+import com.vaadin.shared.ui.dnd.DropTargetState;
 
 /**
- * RPC for firing server side event when client side dragstart event happens on
- * drag source.
+ * State class containing parameters for GridDropTarget.
  *
  * @author Vaadin Ltd
- * @since 8.1
+ * @since
  */
-public interface DragSourceRpc extends ServerRpc {
+public class GridDropTargetState extends DropTargetState {
 
     /**
-     * Called when dragstart event happens on client side.
+     * Stores the drop mode of the drop target Grid.
      */
-    public void dragStart();
-
-    /**
-     * Called when dragend event happens on client side.
-     *
-     * @param dropEffect
-     *         Drop effect of the dragend event, extracted from {@code
-     *         DataTransfer.dropEffect} parameter.
-     */
-    public void dragEnd(DropEffect dropEffect);
+    public DropMode dropMode;
 }
