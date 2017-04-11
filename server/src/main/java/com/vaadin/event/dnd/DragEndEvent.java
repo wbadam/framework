@@ -56,6 +56,16 @@ public class DragEndEvent<T extends AbstractComponent> extends Component.Event {
     }
 
     /**
+     * Tells if the drop event was canceled e.g. by pressing the ESC key or 
+     *
+     * @return {@literal true} if the event was canceled, {@literal false}
+     * otherwise
+     */
+    public boolean isDropCanceled() {
+        return dropEffect == DropEffect.NONE;
+    }
+
+    /**
      * Returns the drag source component where the dragend event occurred.
      *
      * @return Component which was dragged.
