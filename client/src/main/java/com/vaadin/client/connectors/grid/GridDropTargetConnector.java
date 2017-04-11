@@ -49,15 +49,18 @@ import elemental.json.JsonObject;
 public class GridDropTargetConnector extends
         DropTargetExtensionConnector {
 
-    // Drag over class name suffixes
-    private final static String CLASS_SUFFIX_BEFORE = "-before";
-    private final static String CLASS_SUFFIX_AFTER = "-after";
+//    // Drag over class name suffixes
+//    private final static String CLASS_SUFFIX_BEFORE = "-top";
+//    private final static String CLASS_SUFFIX_AFTER = "-bottom";
+//
+//    // Drag over class names
+//    private final static String CLASS_DRAG_OVER_BEFORE =
+//            CLASS_DRAG_OVER + CLASS_SUFFIX_BEFORE;
+//    private final static String CLASS_DRAG_OVER_AFTER =
+//            CLASS_DRAG_OVER + CLASS_SUFFIX_AFTER;
 
-    // Drag over class names
-    private final static String CLASS_DRAG_OVER_BEFORE =
-            CLASS_DRAG_OVER + CLASS_SUFFIX_BEFORE;
-    private final static String CLASS_DRAG_OVER_AFTER =
-            CLASS_DRAG_OVER + CLASS_SUFFIX_AFTER;
+    private String classGridRow;
+//    private String classDragCenter;
 
     /**
      * Current drag over class name
@@ -71,6 +74,8 @@ public class GridDropTargetConnector extends
         gridConnector = (GridConnector) target;
 
         super.extend(target);
+
+        classGridRow = gridConnector.getWidget().getStylePrimaryName() + "-row";
     }
 
     @Override
@@ -141,18 +146,18 @@ public class GridDropTargetConnector extends
 
         switch (getDropLocation(target, event)) {
         case ABOVE:
-            classSuffix = CLASS_SUFFIX_BEFORE;
+            classSuffix = CLASS_SUFFIX_DRAG_TOP;
             break;
         case BELOW:
-            classSuffix = CLASS_SUFFIX_AFTER;
+            classSuffix = CLASS_SUFFIX_DRAG_BOTTOM;
             break;
         case ON_TOP:
         default:
-            classSuffix = "";
+            classSuffix = CLASS_SUFFIX_DRAG_CENTER;
             break;
         }
 
-        return CLASS_DRAG_OVER + classSuffix;
+        return classGridRow + classSuffix;
     }
 
     @Override
@@ -160,9 +165,9 @@ public class GridDropTargetConnector extends
 
         // Remove all possible drag over class names
         getTargetRow((Element) event.getTarget()).ifPresent(e -> {
-            e.removeClassName(CLASS_DRAG_OVER);
-            e.removeClassName(CLASS_DRAG_OVER_BEFORE);
-            e.removeClassName(CLASS_DRAG_OVER_AFTER);
+            e.removeClassName(classGridRow + CLASS_SUFFIX_DRAG_CENTER);
+            e.removeClassName(classGridRow + CLASS_SUFFIX_DRAG_TOP);
+            e.removeClassName(classGridRow + CLASS_SUFFIX_DRAG_BOTTOM);
         });
     }
 

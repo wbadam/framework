@@ -41,7 +41,10 @@ import elemental.events.EventTarget;
 @Connect(DropTargetExtension.class)
 public class DropTargetExtensionConnector extends AbstractExtensionConnector {
 
-    protected static final String CLASS_DRAG_OVER = "v-drag-over";
+//    protected static final String CLASS_DRAG_OVER = "v-drag-over";
+    protected static final String CLASS_SUFFIX_DRAG_CENTER = "-drag-center";
+    protected static final String CLASS_SUFFIX_DRAG_TOP = "-drag-top";
+    protected static final String CLASS_SUFFIX_DRAG_BOTTOM = "-drag-bottom";
 
     // Create event listeners
     private final EventListener dragEnterListener = this::onDragEnter;
@@ -231,7 +234,7 @@ public class DropTargetExtensionConnector extends AbstractExtensionConnector {
      *         The drag enter or dragover event that triggered the indication.
      */
     protected void setTargetIndicator(Event event) {
-        getDropTargetElement().addClassName(CLASS_DRAG_OVER);
+        getDropTargetElement().addClassName(dropTargetWidget.getStylePrimaryName() + CLASS_SUFFIX_DRAG_CENTER);
     }
 
     /**
@@ -243,7 +246,7 @@ public class DropTargetExtensionConnector extends AbstractExtensionConnector {
      *         the event that triggered the removal of the indicator
      */
     protected void removeTargetIndicator(Event event) {
-        getDropTargetElement().removeClassName(CLASS_DRAG_OVER);
+        getDropTargetElement().removeClassName(dropTargetWidget.getStylePrimaryName() + CLASS_SUFFIX_DRAG_CENTER);
     }
 
     private native boolean executeScript(NativeEvent event, String script)/*-{
