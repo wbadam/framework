@@ -31,6 +31,8 @@ import com.vaadin.ui.Link;
 @Connect(Link.class)
 public class LinkConnector extends AbstractComponentConnector {
 
+    private static final String ERROR_INDICATOR_STYLE_NAME = "v-errorindicator";
+
     @Override
     public LinkState getState() {
         return (LinkState) super.getState();
@@ -74,8 +76,11 @@ public class LinkConnector extends AbstractComponentConnector {
         if (null != getState().errorMessage) {
             if (getWidget().errorIndicatorElement == null) {
                 getWidget().errorIndicatorElement = DOM.createDiv();
-                DOM.setElementProperty(getWidget().errorIndicatorElement,
-                        "className", "v-errorindicator");
+                getWidget().errorIndicatorElement
+                        .setClassName(ERROR_INDICATOR_STYLE_NAME);
+                getWidget().errorIndicatorElement.addClassName(
+                        ERROR_INDICATOR_STYLE_NAME + "-" + getState().errorLevel
+                                .toString().toLowerCase());
             }
             DOM.insertChild(getWidget().getElement(),
                     getWidget().errorIndicatorElement, 0);
