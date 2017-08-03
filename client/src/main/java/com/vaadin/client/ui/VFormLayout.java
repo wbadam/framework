@@ -38,6 +38,7 @@ import com.vaadin.client.ui.aria.AriaHelper;
 import com.vaadin.shared.AbstractComponentState;
 import com.vaadin.shared.ComponentConstants;
 import com.vaadin.shared.ui.ComponentStateUtil;
+import com.vaadin.shared.ui.ErrorLevel;
 import com.vaadin.shared.ui.MarginInfo;
 
 /**
@@ -201,10 +202,10 @@ public class VFormLayout extends SimplePanel {
         }
 
         public void updateError(Widget widget, String errorMessage,
-                boolean hideErrors) {
+                ErrorLevel errorLevel, boolean hideErrors) {
             final ErrorFlag e = widgetToError.get(widget);
             if (e != null) {
-                e.updateError(errorMessage, hideErrors);
+                e.updateError(errorMessage, errorLevel, hideErrors);
             }
 
         }
@@ -361,7 +362,8 @@ public class VFormLayout extends SimplePanel {
             return owner;
         }
 
-        public void updateError(String errorMessage, boolean hideErrors) {
+        public void updateError(String errorMessage, ErrorLevel errorLevel,
+                boolean hideErrors) {
             boolean showError = null != errorMessage;
             if (hideErrors) {
                 showError = false;
@@ -382,6 +384,10 @@ public class VFormLayout extends SimplePanel {
                     Roles.getFormRole()
                             .setAriaHiddenState(errorIndicatorElement, true);
                 }
+
+                AbstractComponentConnector
+                        .setErrorLevelStyle(errorIndicatorElement,
+                                "v-errorindicator", errorLevel);
 
             } else if (errorIndicatorElement != null) {
                 DOM.removeChild(getElement(), errorIndicatorElement);
