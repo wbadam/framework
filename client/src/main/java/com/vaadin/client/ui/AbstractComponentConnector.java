@@ -642,8 +642,7 @@ public abstract class AbstractComponentConnector extends AbstractConnector
                 null != state.errorMessage);
 
         // add or remove error level style name
-        String errorLevelPrefix =
-                primaryStyleName + "-" + StyleConstants.ERROR_EXT;
+        String errorLevelPrefix = primaryStyleName + StyleConstants.ERROR_EXT;
         for (ErrorLevel errorLevel : ErrorLevel.values()) {
             setWidgetStyleNameWithPrefix(errorLevelPrefix,
                     errorLevel.toString().toLowerCase(),
