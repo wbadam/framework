@@ -43,9 +43,11 @@ public class AbstractComponentState extends SharedState {
     public String id = null;
     public String primaryStyleName = null;
 
-    // HTML formatted error message for the component
-    // TODO this could be an object with more information, but currently the UI
-    // only uses the message
+    /** HTML formatted error message for the component */
     public String errorMessage = null;
+
+    /** Level of error in text */
+    public String errorLevel = null;
+
     public boolean captionAsHtml = false;
 }
