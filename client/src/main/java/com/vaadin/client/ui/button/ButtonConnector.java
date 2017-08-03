@@ -37,6 +37,8 @@ import com.vaadin.ui.Button;
 public class ButtonConnector extends AbstractComponentConnector
         implements ClickHandler {
 
+    private static final String ERROR_INDICATOR_STYLE_NAME = "v-errorindicator";
+
     @Override
     public boolean delegateCaptionHandling() {
         return false;
@@ -56,7 +58,10 @@ public class ButtonConnector extends AbstractComponentConnector
             if (getWidget().errorIndicatorElement == null) {
                 getWidget().errorIndicatorElement = DOM.createSpan();
                 getWidget().errorIndicatorElement
-                        .setClassName("v-errorindicator");
+                        .setClassName(ERROR_INDICATOR_STYLE_NAME);
+                getWidget().errorIndicatorElement.addClassName(
+                        ERROR_INDICATOR_STYLE_NAME + "-" + getState().errorLevel
+                                .toString().toLowerCase());
             }
             getWidget().wrapper.insertFirst(getWidget().errorIndicatorElement);
 
