@@ -46,6 +46,8 @@ import com.vaadin.ui.CheckBox;
 public class CheckBoxConnector extends AbstractFieldConnector
         implements ClickHandler {
 
+    private static final String ERROR_INDICATOR_STYLE_NAME = "v-errorindicator";
+
     @Override
     public boolean delegateCaptionHandling() {
         return false;
@@ -72,8 +74,11 @@ public class CheckBoxConnector extends AbstractFieldConnector
             if (getWidget().errorIndicatorElement == null) {
                 getWidget().errorIndicatorElement = DOM.createSpan();
                 getWidget().errorIndicatorElement.setInnerHTML("&nbsp;");
-                DOM.setElementProperty(getWidget().errorIndicatorElement,
-                        "className", "v-errorindicator");
+                getWidget().errorIndicatorElement
+                        .setClassName(ERROR_INDICATOR_STYLE_NAME);
+                getWidget().errorIndicatorElement.addClassName(
+                        ERROR_INDICATOR_STYLE_NAME + "-" + getState().errorLevel
+                                .toString().toLowerCase());
                 DOM.appendChild(getWidget().getElement(),
                         getWidget().errorIndicatorElement);
                 DOM.sinkEvents(getWidget().errorIndicatorElement,
