@@ -3,12 +3,14 @@ package com.vaadin.tests.components;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.CompositeErrorMessage;
 import com.vaadin.server.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.TextField;
 
+@Widgetset("com.vaadin.DefaultWidgetSet")
 public class ErrorMessages extends TestBase {
 
     @Override

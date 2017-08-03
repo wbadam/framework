@@ -61,6 +61,7 @@ import com.vaadin.shared.ContextClickRpc;
 import com.vaadin.shared.EventId;
 import com.vaadin.shared.MouseEventDetails;
 import com.vaadin.shared.ui.ComponentStateUtil;
+import com.vaadin.shared.ui.ErrorLevel;
 import com.vaadin.shared.ui.TabIndexState;
 import com.vaadin.shared.ui.ui.UIState;
 
@@ -640,6 +641,15 @@ public abstract class AbstractComponentConnector extends AbstractConnector
         setWidgetStyleNameWithPrefix(primaryStyleName, StyleConstants.ERROR_EXT,
                 null != state.errorMessage);
 
+        // add or remove error level style name
+        String errorLevelPrefix =
+                primaryStyleName + "-" + StyleConstants.ERROR_EXT;
+        for (ErrorLevel errorLevel : ErrorLevel.values()) {
+            setWidgetStyleNameWithPrefix(errorLevelPrefix,
+                    errorLevel.toString().toLowerCase(),
+                    state.errorLevel == errorLevel);
+        }
+
         // add additional user defined style names as class names, prefixed with
         // component default class name. remove nonexistent style names.
 
@@ -764,7 +774,8 @@ public abstract class AbstractComponentConnector extends AbstractConnector
     @Override
     public TooltipInfo getTooltipInfo(Element element) {
         return new TooltipInfo(getState().description,
-                getState().descriptionContentMode, getState().errorMessage);
+                getState().descriptionContentMode, getState().errorMessage,
+                getState().errorLevel, null);
     }
 
     @Override

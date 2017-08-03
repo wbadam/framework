@@ -16,6 +16,7 @@
 package com.vaadin.client;
 
 import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.shared.ui.ErrorLevel;
 import com.vaadin.shared.util.SharedUtil;
 
 public class TooltipInfo {
@@ -25,6 +26,8 @@ public class TooltipInfo {
     private ContentMode contentMode;
 
     private String errorMessageHtml;
+
+    private ErrorLevel errorLevel;
 
     // Contains the tooltip's identifier. If a tooltip's contents and this
     // identifier haven't changed, the tooltip won't be updated in subsequent
@@ -83,10 +86,16 @@ public class TooltipInfo {
 
     public TooltipInfo(String tooltip, ContentMode mode, String errorMessage,
             Object identifier) {
+        this(tooltip, mode, errorMessage, null, identifier);
+    }
+
+    public TooltipInfo(String tooltip, ContentMode mode, String errorMessage,
+            ErrorLevel errorLevel, Object identifier) {
         setIdentifier(identifier);
         setTitle(tooltip);
         setContentMode(mode);
         setErrorMessage(errorMessage);
+        setErrorLevel(errorLevel);
     }
 
     public void setIdentifier(Object identifier) {
@@ -111,6 +120,14 @@ public class TooltipInfo {
 
     public void setErrorMessage(String errorMessage) {
         errorMessageHtml = errorMessage;
+    }
+
+    public ErrorLevel getErrorLevel() {
+        return errorLevel;
+    }
+
+    public void setErrorLevel(ErrorLevel errorLevel) {
+        this.errorLevel = errorLevel;
     }
 
     public ContentMode getContentMode() {
