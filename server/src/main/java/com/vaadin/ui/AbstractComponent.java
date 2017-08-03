@@ -727,8 +727,28 @@ public abstract class AbstractComponent extends AbstractClientConnector
         ErrorMessage error = getErrorMessage();
         if (null != error) {
             getState().errorMessage = error.getFormattedHtmlMessage();
+            getState().errorLevel = convertToStateErrorLevel(
+                    error.getErrorLevel());
         } else {
             getState().errorMessage = null;
+            getState().errorLevel = null;
+        }
+    }
+
+    private com.vaadin.shared.ui.ErrorLevel convertToStateErrorLevel(
+            ErrorLevel errorLevel) {
+        switch (errorLevel) {
+        case INFORMATION:
+            return com.vaadin.shared.ui.ErrorLevel.INFO;
+        case WARNING:
+            return com.vaadin.shared.ui.ErrorLevel.WARNING;
+        case ERROR:
+        default:
+            return com.vaadin.shared.ui.ErrorLevel.ERROR;
+        case CRITICAL:
+            return com.vaadin.shared.ui.ErrorLevel.CRITICAL;
+        case SYSTEMERROR:
+            return com.vaadin.shared.ui.ErrorLevel.SYSTEM;
         }
     }
 
