@@ -699,7 +699,7 @@ public abstract class AbstractComponentConnector extends AbstractConnector
      * @param errorLevel
      *         error level for which the style will be applied
      */
-    protected void setErrorLevelStyle(Element element, String prefix,
+    public static void setErrorLevelStyle(Element element, String prefix,
             ErrorLevel errorLevel) {
         for (ErrorLevel errorLevelValue : ErrorLevel.values()) {
             String className =
