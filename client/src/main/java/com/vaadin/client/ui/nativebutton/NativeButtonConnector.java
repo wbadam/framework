@@ -30,6 +30,8 @@ import com.vaadin.ui.NativeButton;
 @Connect(NativeButton.class)
 public class NativeButtonConnector extends AbstractComponentConnector {
 
+    private static final String ERROR_INDICATOR_STYLE_NAME = "v-errorindicator";
+
     @Override
     public void init() {
         super.init();
@@ -60,7 +62,10 @@ public class NativeButtonConnector extends AbstractComponentConnector {
             if (getWidget().errorIndicatorElement == null) {
                 getWidget().errorIndicatorElement = DOM.createSpan();
                 getWidget().errorIndicatorElement
-                        .setClassName("v-errorindicator");
+                        .setClassName(ERROR_INDICATOR_STYLE_NAME);
+                getWidget().errorIndicatorElement.addClassName(
+                        ERROR_INDICATOR_STYLE_NAME + "-" + getState().errorLevel
+                                .toString().toLowerCase());
             }
             getWidget().getElement().insertBefore(
                     getWidget().errorIndicatorElement,
