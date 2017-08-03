@@ -78,10 +78,9 @@ public class LinkConnector extends AbstractComponentConnector {
                 getWidget().errorIndicatorElement = DOM.createDiv();
                 getWidget().errorIndicatorElement
                         .setClassName(ERROR_INDICATOR_STYLE_NAME);
-                getWidget().errorIndicatorElement.addClassName(
-                        ERROR_INDICATOR_STYLE_NAME + "-" + getState().errorLevel
-                                .toString().toLowerCase());
             }
+            setErrorLevelStyle(getWidget().errorIndicatorElement,
+                    ERROR_INDICATOR_STYLE_NAME, getState().errorLevel);
             DOM.insertChild(getWidget().getElement(),
                     getWidget().errorIndicatorElement, 0);
         } else if (getWidget().errorIndicatorElement != null) {

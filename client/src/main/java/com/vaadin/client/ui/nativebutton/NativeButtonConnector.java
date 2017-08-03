@@ -63,10 +63,9 @@ public class NativeButtonConnector extends AbstractComponentConnector {
                 getWidget().errorIndicatorElement = DOM.createSpan();
                 getWidget().errorIndicatorElement
                         .setClassName(ERROR_INDICATOR_STYLE_NAME);
-                getWidget().errorIndicatorElement.addClassName(
-                        ERROR_INDICATOR_STYLE_NAME + "-" + getState().errorLevel
-                                .toString().toLowerCase());
             }
+            setErrorLevelStyle(getWidget().errorIndicatorElement,
+                    ERROR_INDICATOR_STYLE_NAME, getState().errorLevel);
             getWidget().getElement().insertBefore(
                     getWidget().errorIndicatorElement,
                     getWidget().captionElement);

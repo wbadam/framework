@@ -76,9 +76,6 @@ public class CheckBoxConnector extends AbstractFieldConnector
                 getWidget().errorIndicatorElement.setInnerHTML("&nbsp;");
                 getWidget().errorIndicatorElement
                         .setClassName(ERROR_INDICATOR_STYLE_NAME);
-                getWidget().errorIndicatorElement.addClassName(
-                        ERROR_INDICATOR_STYLE_NAME + "-" + getState().errorLevel
-                                .toString().toLowerCase());
                 DOM.appendChild(getWidget().getElement(),
                         getWidget().errorIndicatorElement);
                 DOM.sinkEvents(getWidget().errorIndicatorElement,
@@ -86,6 +83,8 @@ public class CheckBoxConnector extends AbstractFieldConnector
             } else {
                 getWidget().errorIndicatorElement.getStyle().clearDisplay();
             }
+            setErrorLevelStyle(getWidget().errorIndicatorElement,
+                    ERROR_INDICATOR_STYLE_NAME, getState().errorLevel);
         } else if (getWidget().errorIndicatorElement != null) {
             getWidget().errorIndicatorElement.getStyle()
                     .setDisplay(Display.NONE);

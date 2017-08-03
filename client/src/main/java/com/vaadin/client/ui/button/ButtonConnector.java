@@ -59,10 +59,9 @@ public class ButtonConnector extends AbstractComponentConnector
                 getWidget().errorIndicatorElement = DOM.createSpan();
                 getWidget().errorIndicatorElement
                         .setClassName(ERROR_INDICATOR_STYLE_NAME);
-                getWidget().errorIndicatorElement.addClassName(
-                        ERROR_INDICATOR_STYLE_NAME + "-" + getState().errorLevel
-                                .toString().toLowerCase());
             }
+            setErrorLevelStyle(getWidget().errorIndicatorElement,
+                    ERROR_INDICATOR_STYLE_NAME, getState().errorLevel);
             getWidget().wrapper.insertFirst(getWidget().errorIndicatorElement);
 
         } else if (getWidget().errorIndicatorElement != null) {
