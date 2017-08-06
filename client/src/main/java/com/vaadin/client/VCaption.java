@@ -26,6 +26,7 @@ import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHTML;
 import com.vaadin.client.communication.StateChangeEvent;
+import com.vaadin.client.ui.AbstractComponentConnector;
 import com.vaadin.client.ui.HasErrorIndicator;
 import com.vaadin.client.ui.HasRequiredIndicator;
 import com.vaadin.client.ui.Icon;
@@ -272,6 +273,8 @@ public class VCaption extends HTML {
                 Roles.getTextboxRole().setAriaHiddenState(errorIndicatorElement,
                         true);
             }
+            AbstractComponentConnector.setErrorLevelStyle(errorIndicatorElement,
+                    "v-errorindicator", owner.getState().errorLevel);
         } else if (errorIndicatorElement != null) {
             // Remove existing
             getElement().removeChild(errorIndicatorElement);
