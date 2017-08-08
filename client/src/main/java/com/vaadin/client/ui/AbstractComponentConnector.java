@@ -46,6 +46,7 @@ import com.vaadin.client.UIDL;
 import com.vaadin.client.Util;
 import com.vaadin.client.VConsole;
 import com.vaadin.client.WidgetUtil;
+import com.vaadin.client.WidgetUtil.ErrorUtil;
 import com.vaadin.client.annotations.OnStateChange;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.extensions.DragSourceExtensionConnector;
@@ -642,7 +643,7 @@ public abstract class AbstractComponentConnector extends AbstractConnector
                 null != state.errorMessage);
 
         // add or remove error level style name
-        setErrorLevelStyle(getWidget().getElement(),
+        ErrorUtil.setErrorLevelStyle(getWidget().getElement(),
                 primaryStyleName + StyleConstants.ERROR_EXT, state.errorLevel);
 
         // add additional user defined style names as class names, prefixed with
@@ -685,31 +686,6 @@ public abstract class AbstractComponentConnector extends AbstractConnector
         }
 
         Profiler.leave("AbstractComponentConnector.updateWidgetStyleNames");
-    }
-
-    /**
-     * Sets the style name for the given error level on the given element and
-     * removes all previously applied error level style names The style name has
-     * the following format: {@code prefix-errorLevel}.
-     *
-     * @param element
-     *         element to apply the style name to
-     * @param prefix
-     *         part of the style name before the error level string
-     * @param errorLevel
-     *         error level for which the style will be applied
-     */
-    public static void setErrorLevelStyle(Element element, String prefix,
-            ErrorLevel errorLevel) {
-        for (ErrorLevel errorLevelValue : ErrorLevel.values()) {
-            String className =
-                    prefix + "-" + errorLevelValue.toString().toLowerCase();
-            if (errorLevel == errorLevelValue) {
-                element.addClassName(className);
-            } else {
-                element.removeClassName(className);
-            }
-        }
     }
 
     /**

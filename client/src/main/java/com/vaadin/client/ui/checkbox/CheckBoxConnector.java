@@ -23,6 +23,7 @@ import com.google.gwt.user.client.Event;
 import com.vaadin.client.MouseEventDetailsBuilder;
 import com.vaadin.client.VCaption;
 import com.vaadin.client.VTooltip;
+import com.vaadin.client.WidgetUtil.ErrorUtil;
 import com.vaadin.client.annotations.OnStateChange;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractFieldConnector;
@@ -45,8 +46,6 @@ import com.vaadin.ui.CheckBox;
 @Connect(CheckBox.class)
 public class CheckBoxConnector extends AbstractFieldConnector
         implements ClickHandler {
-
-    private static final String ERROR_INDICATOR_STYLE_NAME = "v-errorindicator";
 
     @Override
     public boolean delegateCaptionHandling() {
@@ -74,8 +73,8 @@ public class CheckBoxConnector extends AbstractFieldConnector
             if (getWidget().errorIndicatorElement == null) {
                 getWidget().errorIndicatorElement = DOM.createSpan();
                 getWidget().errorIndicatorElement.setInnerHTML("&nbsp;");
-                getWidget().errorIndicatorElement
-                        .setClassName(ERROR_INDICATOR_STYLE_NAME);
+                getWidget().errorIndicatorElement.setClassName(
+                        ErrorUtil.STYLE_NAME_ERROR_INDICATOR);
                 DOM.appendChild(getWidget().getElement(),
                         getWidget().errorIndicatorElement);
                 DOM.sinkEvents(getWidget().errorIndicatorElement,
@@ -83,8 +82,11 @@ public class CheckBoxConnector extends AbstractFieldConnector
             } else {
                 getWidget().errorIndicatorElement.getStyle().clearDisplay();
             }
-            setErrorLevelStyle(getWidget().errorIndicatorElement,
-                    ERROR_INDICATOR_STYLE_NAME, getState().errorLevel);
+
+            ErrorUtil.setErrorLevelStyle(getWidget().errorIndicatorElement,
+                            ErrorUtil.STYLE_NAME_ERROR_INDICATOR,
+                            getState().errorLevel);
+
         } else if (getWidget().errorIndicatorElement != null) {
             getWidget().errorIndicatorElement.getStyle()
                     .setDisplay(Display.NONE);

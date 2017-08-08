@@ -30,7 +30,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.LayoutManager;
 import com.vaadin.client.StyleConstants;
 import com.vaadin.client.WidgetUtil;
-import com.vaadin.client.ui.AbstractComponentConnector;
+import com.vaadin.client.WidgetUtil.ErrorUtil;
 import com.vaadin.client.ui.FontIcon;
 import com.vaadin.client.ui.Icon;
 import com.vaadin.client.ui.ImageIcon;
@@ -617,12 +617,11 @@ public class Slot extends SimplePanel {
         if (error != null && showError) {
             if (errorIcon == null) {
                 errorIcon = DOM.createSpan();
-                errorIcon.setClassName("v-errorindicator");
+                errorIcon.setClassName(ErrorUtil.STYLE_NAME_ERROR_INDICATOR);
             }
 
-            AbstractComponentConnector
-                    .setErrorLevelStyle(errorIcon, "v-errorindicator",
-                            errorLevel);
+            ErrorUtil.setErrorLevelStyle(errorIcon,
+                    ErrorUtil.STYLE_NAME_ERROR_INDICATOR, errorLevel);
 
             caption.appendChild(errorIcon);
         } else if (errorIcon != null) {

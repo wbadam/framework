@@ -34,6 +34,7 @@ import com.vaadin.client.ComponentConnector;
 import com.vaadin.client.Focusable;
 import com.vaadin.client.StyleConstants;
 import com.vaadin.client.VTooltip;
+import com.vaadin.client.WidgetUtil.ErrorUtil;
 import com.vaadin.client.ui.aria.AriaHelper;
 import com.vaadin.shared.AbstractComponentState;
 import com.vaadin.shared.ComponentConstants;
@@ -385,9 +386,8 @@ public class VFormLayout extends SimplePanel {
                             .setAriaHiddenState(errorIndicatorElement, true);
                 }
 
-                AbstractComponentConnector
-                        .setErrorLevelStyle(errorIndicatorElement,
-                                "v-errorindicator", errorLevel);
+                ErrorUtil.setErrorLevelStyle(errorIndicatorElement,
+                        ErrorUtil.STYLE_NAME_ERROR_INDICATOR, errorLevel);
 
             } else if (errorIndicatorElement != null) {
                 DOM.removeChild(getElement(), errorIndicatorElement);

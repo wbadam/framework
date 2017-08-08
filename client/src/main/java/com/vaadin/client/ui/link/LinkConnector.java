@@ -19,6 +19,7 @@ package com.vaadin.client.ui.link;
 import com.google.gwt.dom.client.Style.Display;
 import com.google.gwt.user.client.DOM;
 import com.vaadin.client.VCaption;
+import com.vaadin.client.WidgetUtil.ErrorUtil;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractComponentConnector;
 import com.vaadin.client.ui.Icon;
@@ -30,8 +31,6 @@ import com.vaadin.ui.Link;
 
 @Connect(Link.class)
 public class LinkConnector extends AbstractComponentConnector {
-
-    private static final String ERROR_INDICATOR_STYLE_NAME = "v-errorindicator";
 
     @Override
     public LinkState getState() {
@@ -76,11 +75,14 @@ public class LinkConnector extends AbstractComponentConnector {
         if (null != getState().errorMessage) {
             if (getWidget().errorIndicatorElement == null) {
                 getWidget().errorIndicatorElement = DOM.createDiv();
-                getWidget().errorIndicatorElement
-                        .setClassName(ERROR_INDICATOR_STYLE_NAME);
+                getWidget().errorIndicatorElement.setClassName(
+                        ErrorUtil.STYLE_NAME_ERROR_INDICATOR);
             }
-            setErrorLevelStyle(getWidget().errorIndicatorElement,
-                    ERROR_INDICATOR_STYLE_NAME, getState().errorLevel);
+
+            ErrorUtil.setErrorLevelStyle(getWidget().errorIndicatorElement,
+                            ErrorUtil.STYLE_NAME_ERROR_INDICATOR,
+                            getState().errorLevel);
+
             DOM.insertChild(getWidget().getElement(),
                     getWidget().errorIndicatorElement, 0);
         } else if (getWidget().errorIndicatorElement != null) {
