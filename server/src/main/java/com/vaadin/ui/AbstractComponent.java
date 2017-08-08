@@ -735,7 +735,7 @@ public abstract class AbstractComponent extends AbstractClientConnector
         }
     }
 
-    private com.vaadin.shared.ui.ErrorLevel convertToStateErrorLevel(
+    com.vaadin.shared.ui.ErrorLevel convertToStateErrorLevel(
             ErrorLevel errorLevel) {
         switch (errorLevel) {
         case INFORMATION:
