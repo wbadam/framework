@@ -377,7 +377,7 @@ public class VFormLayout extends SimplePanel {
                     errorIndicatorElement = DOM.createDiv();
                     DOM.setInnerHTML(errorIndicatorElement, "&nbsp;");
                     DOM.setElementProperty(errorIndicatorElement, "className",
-                            "v-errorindicator");
+                            ErrorUtil.STYLE_NAME_ERROR_INDICATOR);
                     DOM.appendChild(getElement(), errorIndicatorElement);
 
                     // Hide the error indicator from screen reader, as this

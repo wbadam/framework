@@ -265,7 +265,7 @@ public class VCaption extends HTML {
                 errorIndicatorElement = DOM.createDiv();
                 DOM.setInnerHTML(errorIndicatorElement, "&nbsp;");
                 DOM.setElementProperty(errorIndicatorElement, "className",
-                        "v-errorindicator");
+                        ErrorUtil.STYLE_NAME_ERROR_INDICATOR);
 
                 DOM.insertChild(getElement(), errorIndicatorElement,
                         getInsertPosition(InsertPosition.ERROR));
