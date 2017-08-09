@@ -17,6 +17,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.NativeButton;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.ValoTheme;
@@ -37,6 +38,7 @@ public class ErrorLevels extends AbstractTestUI {
     private NativeButton nativeButton;
     private FormLayout formLayout;
     private TextField formLayoutTextField;
+    private Panel panel;
 
     @Override
     protected void setup(VaadinRequest request) {
@@ -108,6 +110,12 @@ public class ErrorLevels extends AbstractTestUI {
 
         addComponent(formLayout);
 
+        // Panel
+        panel = new Panel();
+        panel.setContent(new Label("Panel"));
+        panel.setWidth("400px");
+        addComponent(panel);
+
         setErrorMessages();
 
         getLayout().setSpacing(true);
@@ -128,6 +136,7 @@ public class ErrorLevels extends AbstractTestUI {
         nativeButton.setComponentError(createErrorMessage("Native button error"));
         formLayout.setComponentError(createErrorMessage("Form layout error"));
         formLayoutTextField.setComponentError(createErrorMessage("Form layout text field error"));
+        panel.setComponentError(createErrorMessage("Panel error"));
     }
 
     private ErrorMessage createErrorMessage(String text) {
