@@ -51,7 +51,7 @@ public class ButtonConnector extends AbstractComponentConnector
         ConnectorFocusAndBlurHandler.addHandlers(this);
     }
 
-    @OnStateChange("errorMessage")
+    @OnStateChange({"errorMessage", "errorLevel"})
     void setErrorMessage() {
         if (null != getState().errorMessage) {
             if (getWidget().errorIndicatorElement == null) {
