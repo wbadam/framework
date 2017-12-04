@@ -484,7 +484,8 @@ public class HierarchyMapper<T, F> implements DataGenerator<T> {
 
     /**
      * Fetches children of {@code parent} recursively, until {@code limit}
-     * number of items are reached.
+     * number of items are reached. The root ({@code null} item) is never
+     * included.
      * 
      * @param parent
      *            item, whoes children to be fetched
@@ -500,7 +501,7 @@ public class HierarchyMapper<T, F> implements DataGenerator<T> {
     private List<T> fetchChildrenRecursively(T parent, boolean includeParent,
             int offset, int limit) {
         List<T> items = new ArrayList<>(limit);
-        if (includeParent && limit-- > 0) {
+        if (includeParent && parent != null && limit-- > 0) {
             items.add(parent);
         }
 
@@ -552,8 +553,9 @@ public class HierarchyMapper<T, F> implements DataGenerator<T> {
      * {@code limit} number of items are reached.
      * <p>
      * Parent item is only included in the returned list if the following is
-     * true: {@code includeParent == true && offset + limit > # all descendants}
-     * 
+     * true: {@code includeParent == true && offset + limit > # all
+     * descendants}. The root ({@code null} item) is never included.
+     *
      * @param parent
      *            item, whoes children to be fetched
      * @param includeParent
@@ -584,7 +586,7 @@ public class HierarchyMapper<T, F> implements DataGenerator<T> {
             }
         }
 
-        if (limit > 0) {
+        if (limit > 0 && parent != null) {
             items.add(parent);
         }
 
